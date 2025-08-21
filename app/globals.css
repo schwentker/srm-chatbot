@@ -4,78 +4,74 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0);
-  --destructive: oklch(0.577 0.245 27.325);
-  --destructive-foreground: oklch(0.577 0.245 27.325);
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
-  --chart-1: oklch(0.646 0.222 41.116);
-  --chart-2: oklch(0.6 0.118 184.704);
-  --chart-3: oklch(0.398 0.07 227.392);
-  --chart-4: oklch(0.828 0.189 84.429);
-  --chart-5: oklch(0.769 0.188 70.08);
-  --radius: 0.625rem;
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: oklch(0.205 0 0);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.97 0 0);
-  --sidebar-accent-foreground: oklch(0.205 0 0);
-  --sidebar-border: oklch(0.922 0 0);
-  --sidebar-ring: oklch(0.708 0 0);
-  /* Added custom navy blue colors for SRM Corp branding */
-  --navy-900: #1e3a8a;
-  --navy-800: #1e40af;
-  --navy-200: #bfdbfe;
+  --background: oklch(1 0 0); /* Pure white background */
+  --foreground: oklch(0.2 0.05 240); /* Deep blue for primary text */
+  --card: oklch(0.98 0.02 240); /* Light blue for chat cards */
+  --card-foreground: oklch(0.35 0.02 220); /* Dark gray for card text */
+  --popover: oklch(1 0 0); /* White for popovers */
+  --popover-foreground: oklch(0.2 0.05 240); /* Deep blue for popover text */
+  --primary: oklch(0.2 0.05 240); /* Deep blue for primary actions */
+  --primary-foreground: oklch(1 0 0); /* White text on primary */
+  --secondary: oklch(0.65 0.15 240); /* Vibrant blue for secondary actions */
+  --secondary-foreground: oklch(1 0 0); /* White text on secondary */
+  --muted: oklch(0.98 0.02 240); /* Light blue for muted elements */
+  --muted-foreground: oklch(0.35 0.02 220); /* Dark gray for muted text */
+  --accent: oklch(0.65 0.15 240); /* Vibrant blue for accents */
+  --accent-foreground: oklch(1 0 0); /* White text on accents */
+  --destructive: oklch(0.6 0.2 20); /* Red for warnings/errors */
+  --destructive-foreground: oklch(1 0 0); /* White text on destructive */
+  --border: oklch(0.9 0.01 240); /* Light gray borders */
+  --input: oklch(1 0 0); /* White input backgrounds */
+  --ring: oklch(0.65 0.15 240 / 0.5); /* Blue ring for focus states */
+  --chart-1: oklch(0.2 0.05 240);
+  --chart-2: oklch(0.65 0.15 240);
+  --chart-3: oklch(0.98 0.02 240);
+  --chart-4: oklch(0.35 0.02 220);
+  --chart-5: oklch(0.6 0.2 20);
+  --radius: 0.5rem;
+  --sidebar: oklch(0.98 0.02 240);
+  --sidebar-foreground: oklch(0.2 0.05 240);
+  --sidebar-primary: oklch(0.2 0.05 240);
+  --sidebar-primary-foreground: oklch(1 0 0);
+  --sidebar-accent: oklch(0.65 0.15 240);
+  --sidebar-accent-foreground: oklch(1 0 0);
+  --sidebar-border: oklch(0.9 0.01 240);
+  --sidebar-ring: oklch(0.65 0.15 240 / 0.5);
 }
 
 .dark {
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.145 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.145 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.985 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
-  --destructive: oklch(0.396 0.141 25.723);
-  --destructive-foreground: oklch(0.637 0.237 25.331);
-  --border: oklch(0.269 0 0);
-  --input: oklch(0.269 0 0);
-  --ring: oklch(0.439 0 0);
-  --chart-1: oklch(0.488 0.243 264.376);
-  --chart-2: oklch(0.696 0.17 162.48);
-  --chart-3: oklch(0.769 0.188 70.08);
-  --chart-4: oklch(0.627 0.265 303.9);
-  --chart-5: oklch(0.645 0.246 16.439);
-  --sidebar: oklch(0.205 0 0);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.269 0 0);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
-  --sidebar-border: oklch(0.269 0 0);
-  --sidebar-ring: oklch(0.439 0 0);
+  --background: oklch(0.08 0.02 240);
+  --foreground: oklch(0.98 0.01 240);
+  --card: oklch(0.12 0.02 240);
+  --card-foreground: oklch(0.95 0.01 240);
+  --popover: oklch(0.08 0.02 240);
+  --popover-foreground: oklch(0.98 0.01 240);
+  --primary: oklch(0.65 0.15 240);
+  --primary-foreground: oklch(0.08 0.02 240);
+  --secondary: oklch(0.15 0.02 240);
+  --secondary-foreground: oklch(0.98 0.01 240);
+  --muted: oklch(0.15 0.02 240);
+  --muted-foreground: oklch(0.7 0.02 240);
+  --accent: oklch(0.65 0.15 240);
+  --accent-foreground: oklch(0.08 0.02 240);
+  --destructive: oklch(0.5 0.2 20);
+  --destructive-foreground: oklch(0.98 0.01 240);
+  --border: oklch(0.15 0.02 240);
+  --input: oklch(0.15 0.02 240);
+  --ring: oklch(0.65 0.15 240 / 0.5);
+  --chart-1: oklch(0.65 0.15 240);
+  --chart-2: oklch(0.7 0.12 180);
+  --chart-3: oklch(0.75 0.1 120);
+  --chart-4: oklch(0.6 0.18 300);
+  --chart-5: oklch(0.65 0.2 60);
+  --sidebar: oklch(0.08 0.02 240);
+  --sidebar-foreground: oklch(0.98 0.01 240);
+  --sidebar-primary: oklch(0.65 0.15 240);
+  --sidebar-primary-foreground: oklch(0.08 0.02 240);
+  --sidebar-accent: oklch(0.15 0.02 240);
+  --sidebar-accent-foreground: oklch(0.98 0.01 240);
+  --sidebar-border: oklch(0.15 0.02 240);
+  --sidebar-ring: oklch(0.65 0.15 240 / 0.5);
 }
 
 @theme inline {
@@ -115,10 +111,6 @@
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
-  /* Added navy color utilities */
-  --color-navy-900: var(--navy-900);
-  --color-navy-800: var(--navy-800);
-  --color-navy-200: var(--navy-200);
 }
 
 @layer base {
@@ -127,18 +119,5 @@
   }
   body {
     @apply bg-background text-foreground;
-  }
-}
-
-/* Added custom navy utility classes */
-@layer utilities {
-  .bg-navy-900 {
-    background-color: var(--color-navy-900);
-  }
-  .bg-navy-800 {
-    background-color: var(--color-navy-800);
-  }
-  .text-navy-200 {
-    color: var(--color-navy-200);
   }
 }
