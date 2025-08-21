@@ -3,13 +3,13 @@
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { ArrowLeft, FlaskConical, Clock, TrendingUp, DollarSign } from "lucide-react"
-import { useRouter } from "next/navigation"
+import { useNavigation } from "../../hooks/useNavigation"
 
 export default function LabPage() {
-  const router = useRouter()
+  const navigation = useNavigation()
 
   const handleBackToChat = () => {
-    router.push("/")
+    navigation.push("/")
   }
 
   return (
@@ -81,7 +81,7 @@ export default function LabPage() {
 
               <Button
                 className="w-full bg-emerald-600 hover:bg-emerald-700 text-white group-hover:shadow-md transition-all"
-                onClick={() => router.push("/lab/waived-fee-analysis")}
+                onClick={() => navigation.push("/lab/waived-fee-analysis")}
               >
                 Launch Demo
               </Button>
@@ -115,7 +115,7 @@ export default function LabPage() {
 
               <Button
                 className="w-full bg-primary hover:bg-primary/90 text-primary-foreground group-hover:shadow-md transition-all"
-                onClick={() => router.push("/lab/margin-analysis")}
+                onClick={() => navigation.push("/lab/margin-analysis")}
               >
                 Launch Demo
               </Button>

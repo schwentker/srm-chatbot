@@ -4,7 +4,7 @@ import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { ArrowLeft, ArrowRight, CheckCircle, Database, Brain, Flag, Calculator, Users } from "lucide-react"
-import { useRouter } from "next/navigation"
+import { useNavigation } from "../../../hooks/useNavigation"
 
 const steps = [
   {
@@ -96,11 +96,11 @@ Checking,67800000,0.10,3200`,
 ]
 
 export default function MarginAnalysisDemo() {
-  const router = useRouter()
+  const navigation = useNavigation()
   const [currentStep, setCurrentStep] = useState(1)
 
   const handleBackToLab = () => {
-    router.push("/lab")
+    navigation.push("/lab")
   }
 
   const handleNextStep = () => {
