@@ -6,11 +6,11 @@ import { Card, CardContent } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import { Send, DollarSign, Zap, Users, FlaskConical, Calendar } from "lucide-react"
-import { useNavigation } from "../hooks/useNavigation"
+import { useRouter } from "next/navigation"
 
 export default function ChatInterface() {
   const [message, setMessage] = useState("")
-  const navigation = useNavigation()
+  const router = useRouter()
 
   const handleSendMessage = () => {
     if (message.trim()) {
@@ -20,7 +20,7 @@ export default function ChatInterface() {
   }
 
   const handleLabClick = () => {
-    navigation.push("/lab")
+    router.push("/lab")
   }
 
   const currentTime = new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })
