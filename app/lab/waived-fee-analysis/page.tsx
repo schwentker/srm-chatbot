@@ -364,7 +364,7 @@ export default function WaivedFeeAnalysisDemo() {
 
     allTasks.forEach((task) => {
       setTimeout(() => {
-        if (task.phase) {
+        if ("phase" in task && task.phase) {
           setCurrentPhase(task.message)
         } else {
           setProcessingLogs((prev) => [...prev, task.message])
