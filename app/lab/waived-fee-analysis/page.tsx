@@ -364,7 +364,7 @@ export default function WaivedFeeAnalysisDemo() {
 
     allTasks.forEach((task) => {
       setTimeout(() => {
-        if ('phase' in task && task.phase) {
+        if (task.phase) {
           setCurrentPhase(task.message)
         } else {
           setProcessingLogs((prev) => [...prev, task.message])
@@ -886,6 +886,16 @@ export default function WaivedFeeAnalysisDemo() {
               Back to Lab
             </Button>
             <div className="text-sm text-muted-foreground">Multi-Agent Fee Recovery Analysis</div>
+            {!showResults && (
+              <Button
+                onClick={startAnalysis}
+                disabled={isAnalysisRunning}
+                className="bg-emerald-600 hover:bg-emerald-700 text-white px-6 py-2 text-sm font-medium"
+              >
+                <Play className="w-4 h-4 mr-2" />
+                {isAnalysisRunning ? "Analysis Running..." : "Start Analysis"}
+              </Button>
+            )}
           </div>
         </div>
       </header>
@@ -1058,20 +1068,6 @@ export default function WaivedFeeAnalysisDemo() {
             </Card>
           </div>
         </div>
-
-        {!showResults && (
-          <div className="mt-12 pt-8 border-t border-border text-center">
-            <Button
-              size="lg"
-              onClick={startAnalysis}
-              disabled={isAnalysisRunning}
-              className="bg-emerald-600 hover:bg-emerald-700 text-white px-8 py-3 text-base font-medium"
-            >
-              <Play className="w-5 h-5 mr-2" />
-              {isAnalysisRunning ? "Analysis Running..." : "Start Analysis"}
-            </Button>
-          </div>
-        )}
       </div>
     </div>
   )

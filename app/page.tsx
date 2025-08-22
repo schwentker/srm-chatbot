@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
-import { Send, DollarSign, Zap, Users, FlaskConical, Calendar } from "lucide-react"
+import { Send, UserMinus, Zap, Network, FlaskConical, Users } from "lucide-react"
 import { useRouter } from "next/navigation"
 
 export default function ChatInterface() {
@@ -23,6 +23,18 @@ export default function ChatInterface() {
     router.push("/lab")
   }
 
+  const handleStopAttritionClick = () => {
+    router.push("/stop-member-attrition")
+  }
+
+  const handleBeatFintechClick = () => {
+    router.push("/beat-fintech-competition")
+  }
+
+  const handleVendorEcosystemClick = () => {
+    router.push("/optimize-vendor-ecosystem")
+  }
+
   const currentTime = new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })
 
   return (
@@ -36,49 +48,52 @@ export default function ChatInterface() {
                 <span className="text-primary-foreground font-bold text-lg">S</span>
               </div>
               <div>
-                <h1 className="text-xl font-bold text-foreground">SRM Corp AI Assistant</h1>
-                <p className="text-sm text-muted-foreground">Strategic Resource Management</p>
+                <h1 className="text-xl font-bold text-foreground">SRMcorp's Credit Union Strategic Agent</h1>
+                <p className="text-sm text-muted-foreground">Cooperative Financial Institution Intelligence</p>
               </div>
             </div>
           </div>
         </div>
       </header>
 
-      {/* Action Buttons */}
+      {/* Strategic Action Buttons */}
       <div className="max-w-6xl mx-auto px-4 py-6">
         <div className="flex flex-wrap gap-3 justify-center md:justify-start">
           <Button
             variant="outline"
-            className="flex items-center gap-2 hover:bg-accent hover:text-accent-foreground bg-transparent"
+            className="flex items-center gap-2 hover:bg-accent hover:text-accent-foreground bg-transparent font-medium"
+            onClick={handleStopAttritionClick}
           >
-            <DollarSign className="w-4 h-4" />
-            Cost Savings
+            <UserMinus className="w-4 h-4" />
+            Stop Member Attrition
           </Button>
           <Button
             variant="outline"
-            className="flex items-center gap-2 hover:bg-accent hover:text-accent-foreground bg-transparent"
+            className="flex items-center gap-2 hover:bg-accent hover:text-accent-foreground bg-transparent font-medium"
+            onClick={handleBeatFintechClick}
           >
             <Zap className="w-4 h-4" />
-            Digital Transformation
+            Beat Fintech Competition
           </Button>
           <Button
             variant="outline"
-            className="flex items-center gap-2 hover:bg-accent hover:text-accent-foreground bg-transparent"
+            className="flex items-center gap-2 hover:bg-accent hover:text-accent-foreground bg-transparent font-medium"
+            onClick={handleVendorEcosystemClick}
           >
-            <Users className="w-4 h-4" />
-            Vendor Management
+            <Network className="w-4 h-4" />
+            Optimize Vendor Ecosystem
           </Button>
           <Button
             variant="outline"
-            className="flex items-center gap-2 hover:bg-accent hover:text-accent-foreground bg-transparent"
+            className="flex items-center gap-2 hover:bg-accent hover:text-accent-foreground bg-transparent font-medium"
             onClick={handleLabClick}
           >
             <FlaskConical className="w-4 h-4" />
             Lab
           </Button>
-          <Button className="flex items-center gap-2 bg-primary hover:bg-primary/90">
-            <Calendar className="w-4 h-4" />
-            Book Consultation
+          <Button className="flex items-center gap-2 bg-primary hover:bg-primary/90 font-medium">
+            <Users className="w-4 h-4" />
+            Strategic Board Session
           </Button>
         </div>
       </div>
@@ -94,9 +109,31 @@ export default function ChatInterface() {
             <div className="flex-1">
               <Card className="bg-card border-border">
                 <CardContent className="p-4">
+                  <p className="text-card-foreground leading-relaxed mb-4">
+                    Hello! I'm SRMcorp's Credit Union Strategic Agent - an AI that understands cooperative financial
+                    institution challenges, regulatory environment, and member-owner dynamics.
+                  </p>
+                  <p className="text-card-foreground leading-relaxed mb-4">
+                    <strong>Every credit union needs an agent that thinks like a cooperative</strong> - balancing member
+                    satisfaction over customer metrics, community impact through CRA compliance, and sustainable growth
+                    amid industry consolidation pressures while navigating NCUA examination cycles.
+                  </p>
+                  <p className="text-card-foreground leading-relaxed mb-4">
+                    I understand the complexities of shared branching networks, CO-OP service optimization, field of
+                    membership expansion strategies, and the unique member-owner relationship that differentiates
+                    cooperatives from traditional banking institutions.
+                  </p>
+                  <p className="text-card-foreground leading-relaxed mb-4">
+                    Whether you're facing regulatory examination preparation, community development financial
+                    institution opportunities, or strategic positioning against fintech challengers, I provide insights
+                    rooted in cooperative principles and credit union operational realities.
+                  </p>
                   <p className="text-card-foreground leading-relaxed">
-                    Hello! I'm the SRM Corp AI Assistant. I'm here to help you with cost savings, digital
-                    transformation, vendor management, and more. How can I assist you today?
+                    <em>
+                      This is how SRMcorp delivers strategy to credit unions - through an agent that understands your
+                      cooperative mission, regulatory environment, and the balance between serving members and
+                      sustaining growth.
+                    </em>
                   </p>
                   <div className="flex items-center gap-2 mt-3 pt-3 border-t border-border">
                     <span className="text-xs text-muted-foreground">{currentTime}</span>

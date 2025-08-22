@@ -3,126 +3,439 @@
 import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { ArrowLeft, ArrowRight, CheckCircle, Database, Brain, Flag, Calculator, Users } from "lucide-react"
+import { ArrowLeft, FileText, CheckCircle, Play } from "lucide-react"
 import { useRouter } from "next/navigation"
-
-const steps = [
-  {
-    id: 1,
-    title: "Data Pull (Non-Disruptive)",
-    icon: Database,
-    description: "AI agents securely access your existing data exports without disrupting operations",
-    content: {
-      type: "data",
-      data: `LOAN_PORTFOLIO_EXPORT_Q4_2024.csv
-Product_Type,Outstanding_Balance,Avg_Rate,Avg_Term_Months,Loss_Rate_12M
-Auto_New,24500000,6.25,60,0.8
-Auto_Used,18200000,7.15,54,1.2
-Mortgage_Primary,145600000,4.85,360,0.3
-HELOC,8900000,8.75,120,0.6
-Credit_Cards,3400000,12.50,N/A,2.1
-
-DEPOSIT_PORTFOLIO_EXPORT_Q4_2024.csv
-Product_Type,Balance,Current_Rate,Avg_Balance_Per_Account
-Share_Savings,89500000,0.25,2400
-Money_Market,34200000,1.85,15600
-Share_Certificates_12M,28900000,3.25,8500
-Checking,67800000,0.10,3200`,
-    },
-  },
-  {
-    id: 2,
-    title: "Agentic Margin Analysis",
-    icon: Brain,
-    description: "AI agents analyze spread relationships and identify margin compression patterns",
-    content: {
-      type: "analysis",
-      insights: [
-        "Auto loan margins: 4.2% average spread vs industry 4.8%",
-        "Deposit cost optimization opportunity: $2.1M annually",
-        "HELOC pricing 15bp below optimal rate corridor",
-        "Credit card portfolio underperforming by 180bp",
-      ],
-    },
-  },
-  {
-    id: 3,
-    title: "Opportunity Flagging",
-    icon: Flag,
-    description: "System identifies high-impact opportunities ranked by potential ROI",
-    content: {
-      type: "opportunities",
-      flags: [
-        { priority: "High", opportunity: "Repricing HELOC portfolio", impact: "$890K annual" },
-        { priority: "High", opportunity: "Money market rate optimization", impact: "$650K annual" },
-        { priority: "Medium", opportunity: "Auto loan rate adjustment", impact: "$420K annual" },
-        { priority: "Low", opportunity: "Certificate term restructuring", impact: "$180K annual" },
-      ],
-    },
-  },
-  {
-    id: 4,
-    title: "Impact Modeling",
-    icon: Calculator,
-    description: "Predictive models simulate outcomes and member retention scenarios",
-    content: {
-      type: "modeling",
-      scenarios: [
-        { scenario: "Conservative Approach", netIncome: "+$1.2M", memberRetention: "98.5%", timeframe: "12 months" },
-        { scenario: "Balanced Strategy", netIncome: "+$1.8M", memberRetention: "97.2%", timeframe: "12 months" },
-        { scenario: "Aggressive Optimization", netIncome: "+$2.4M", memberRetention: "95.8%", timeframe: "12 months" },
-      ],
-    },
-  },
-  {
-    id: 5,
-    title: "Human Review & Action",
-    icon: Users,
-    description: "Strategic recommendations delivered to leadership with implementation roadmap",
-    content: {
-      type: "recommendations",
-      actions: [
-        { phase: "Immediate (30 days)", action: "Implement HELOC rate adjustment", impact: "Quick wins" },
-        { phase: "Short-term (90 days)", action: "Launch deposit rate optimization", impact: "Member communication" },
-        { phase: "Medium-term (6 months)", action: "Auto loan portfolio repricing", impact: "Competitive positioning" },
-        {
-          phase: "Long-term (12 months)",
-          action: "Full margin optimization rollout",
-          impact: "Strategic transformation",
-        },
-      ],
-    },
-  },
-]
 
 export default function MarginAnalysisDemo() {
   const router = useRouter()
-  const [currentStep, setCurrentStep] = useState(1)
+  const [activeDepth, setActiveDepth] = useState("Executive Summary")
+  const [isAnalysisRunning, setIsAnalysisRunning] = useState(false)
+  const [showResults, setShowResults] = useState(false)
+  const [processingLogs, setProcessingLogs] = useState<string[]>([])
+  const [currentPhase, setCurrentPhase] = useState("")
+  const [progress, setProgress] = useState(0)
+
+  const [agentStatus, setAgentStatus] = useState({
+    coordinator: "Idle",
+    assetProfitability: "Idle",
+    liabilityCost: "Idle",
+    rateEnvironment: "Idle",
+    memberBehavior: "Idle",
+    almOptimization: "Idle",
+  })
 
   const handleBackToLab = () => {
     router.push("/lab")
   }
 
-  const handleNextStep = () => {
-    if (currentStep < steps.length) {
-      setCurrentStep(currentStep + 1)
+  const startAnalysis = async () => {
+    setIsAnalysisRunning(true)
+    setShowResults(false)
+    setProcessingLogs([])
+    setProgress(0)
+
+    const logs = [
+      "[2:47:23 PM] Initializing margin optimization workflow...",
+      "[2:47:23 PM] Processing ALM_Report_Dec2024.xlsx",
+      "[2:47:23 PM] Validating asset-liability positions... ✓",
+      "[2:47:23 PM] Extracting 45,000 loan records with yield data",
+      "[2:47:23 PM] Processing Product_Margins_Q4_2024.csv",
+      "[2:47:23 PM] Parsing product-level profitability metrics...",
+      "[2:47:23 PM] Calculating risk-adjusted net interest margins",
+      "[2:47:23 PM] Processing Rate_Elasticity_Analysis_2024.xlsx",
+      "[2:47:23 PM] Analyzing member rate sensitivity patterns...",
+      "[2:47:23 PM] Modeling retention probability curves",
+      "[2:47:23 PM] Processing CUNA_Rate_Survey_Dec2024.pdf",
+      "[2:47:23 PM] Extracting competitive rate benchmarks...",
+      "[2:47:23 PM] Identifying market positioning gaps",
+      "[2:47:23 PM] Processing Treasury_Yield_Data_2024.csv",
+      "[2:47:23 PM] Mapping yield curve movements and fed policy...",
+      "[2:47:24 PM] Data quality validation: 98.7% complete ✓",
+      "[2:47:24 PM] Detecting duration mismatch exposures...",
+      "[2:47:24 PM] Analyzing auto loan repricing opportunities...",
+      "[2:47:24 PM] Evaluating certificate ladder optimization...",
+      "[2:47:24 PM] Calculating member churn risk by rate scenario...",
+    ]
+
+    // Phase 1: File Processing (0-12s)
+    setCurrentPhase("Phase 1: File Processing & Data Extraction")
+    setAgentStatus((prev) => ({ ...prev, coordinator: "Processing" }))
+
+    for (let i = 0; i < 10; i++) {
+      await new Promise((resolve) => setTimeout(resolve, 1200))
+      setProcessingLogs((prev) => [...prev, logs[i]])
+      setProgress((i + 1) * 2)
     }
+
+    // Phase 2: Parallel Analysis (12-35s)
+    setCurrentPhase("Phase 2: Multi-Agent Margin Analysis")
+    setAgentStatus((prev) => ({
+      ...prev,
+      assetProfitability: "Processing",
+      liabilityCost: "Processing",
+      rateEnvironment: "Processing",
+      memberBehavior: "Processing",
+      almOptimization: "Processing",
+    }))
+
+    for (let i = 10; i < 16; i++) {
+      await new Promise((resolve) => setTimeout(resolve, 1500))
+      setProcessingLogs((prev) => [...prev, logs[i]])
+      setProgress(20 + (i - 9) * 4)
+    }
+
+    // Phase 3: Synthesis (35-45s)
+    setCurrentPhase("Phase 3: Coordinator Synthesis")
+    setAgentStatus((prev) => ({
+      ...prev,
+      assetProfitability: "Complete",
+      liabilityCost: "Complete",
+      rateEnvironment: "Complete",
+      memberBehavior: "Complete",
+      almOptimization: "Complete",
+    }))
+
+    for (let i = 16; i < 20; i++) {
+      await new Promise((resolve) => setTimeout(resolve, 2000))
+      setProcessingLogs((prev) => [...prev, logs[i]])
+      setProgress(44 + (i - 15) * 8)
+    }
+
+    // Phase 4: Final Output (45-50s)
+    setCurrentPhase("Phase 4: Results Generation")
+    setAgentStatus((prev) => ({ ...prev, coordinator: "Complete" }))
+    setProgress(100)
+
+    await new Promise((resolve) => setTimeout(resolve, 2000))
+    setIsAnalysisRunning(false)
+    setShowResults(true)
   }
 
-  const handlePrevStep = () => {
-    if (currentStep > 1) {
-      setCurrentStep(currentStep - 1)
+  const depthOptions = ["Executive Summary", "Agent Workflow", "Implementation"]
+
+  const agents = [
+    {
+      name: "Primary Coordinator",
+      description: "Orchestrates multi-agent margin optimization workflow",
+      status: agentStatus.coordinator,
+      color: "bg-blue-50 border-blue-200",
+    },
+    {
+      name: "Asset Profitability Agent",
+      description: "Analyzes loan portfolio yields and risk-adjusted returns",
+      status: agentStatus.assetProfitability,
+      color: "bg-green-50 border-green-200",
+    },
+    {
+      name: "Liability Cost Agent",
+      description: "Evaluates deposit rates and funding cost efficiency",
+      status: agentStatus.liabilityCost,
+      color: "bg-purple-50 border-purple-200",
+    },
+    {
+      name: "Rate Environment Agent",
+      description: "Monitors fed funds, yield curve, and competitive positioning",
+      status: agentStatus.rateEnvironment,
+      color: "bg-orange-50 border-orange-200",
+    },
+    {
+      name: "Member Behavior Agent",
+      description: "Predicts rate sensitivity and retention patterns",
+      status: agentStatus.memberBehavior,
+      color: "bg-pink-50 border-pink-200",
+    },
+    {
+      name: "ALM Optimization Agent",
+      description: "Identifies asset-liability mismatches and duration gaps",
+      status: agentStatus.almOptimization,
+      color: "bg-teal-50 border-teal-200",
+    },
+  ]
+
+  const dataSources = [
+    {
+      name: "ALM Portfolio Reports",
+      description: "Monthly asset-liability management exports (Excel)",
+      filename: "ALM_Report_Dec2024.xlsx",
+      size: "12.4 MB",
+      records: "45,000 loan records processed",
+      icon: "📊",
+      status: "uploaded",
+    },
+    {
+      name: "Product Profitability Analysis",
+      description: "Quarterly margin analysis by product line (CSV)",
+      filename: "Product_Margins_Q4_2024.csv",
+      size: "3.8 MB",
+      records: "28 product categories analyzed",
+      icon: "📈",
+      status: "uploaded",
+    },
+    {
+      name: "Member Rate Sensitivity Study",
+      description: "Historical rate change impact data (Excel)",
+      filename: "Rate_Elasticity_Analysis_2024.xlsx",
+      size: "2.1 MB",
+      records: "31,500 member behaviors tracked",
+      icon: "📋",
+      status: "uploaded",
+    },
+    {
+      name: "Competitive Rate Survey",
+      description: "Weekly market rate intelligence (PDF)",
+      filename: "CUNA_Rate_Survey_Dec2024.pdf",
+      size: "1.9 MB",
+      records: "127 credit union rates benchmarked",
+      icon: "📄",
+      status: "uploaded",
+    },
+    {
+      name: "Fed Funds & Yield Curve Data",
+      description: "Daily rate environment data (CSV)",
+      filename: "Treasury_Yield_Data_2024.csv",
+      size: "0.7 MB",
+      records: "365 days of rate movements",
+      icon: "📊",
+      status: "uploaded",
+    },
+  ]
+
+  const getDepthContent = () => {
+    if (!showResults) {
+      return (
+        <div className="space-y-6">
+          <div className="text-center py-8">
+            <h3 className="text-xl font-semibold text-foreground mb-4">Credit Union Margin Analysis Demo</h3>
+            <p className="text-muted-foreground mb-6 max-w-2xl mx-auto">
+              This demonstration shows how our AI agents analyze your credit union's net interest margin performance and
+              identify optimization opportunities across your asset-liability portfolio.
+            </p>
+            <div className="bg-muted/30 rounded-lg p-6 max-w-2xl mx-auto">
+              <h4 className="font-semibold text-foreground mb-3">What You'll See:</h4>
+              <ul className="text-left text-muted-foreground space-y-2">
+                <li>• Multi-agent analysis of loan and deposit portfolios</li>
+                <li>• Rate environment impact on margin compression</li>
+                <li>• Member behavior modeling for retention scenarios</li>
+                <li>• Asset-liability optimization recommendations</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      )
+    }
+
+    if (activeDepth === "Executive Summary") {
+      return (
+        <div className="space-y-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+            <Card className="border-red-200 bg-red-50">
+              <CardContent className="p-4 text-center">
+                <div className="text-2xl font-bold text-red-700">87bp</div>
+                <div className="text-sm text-red-600">Net Interest Margin Gap</div>
+                <div className="text-xs text-muted-foreground mt-1">below peer median</div>
+              </CardContent>
+            </Card>
+            <Card className="border-green-200 bg-green-50">
+              <CardContent className="p-4 text-center">
+                <div className="text-2xl font-bold text-green-700">$3.4M</div>
+                <div className="text-sm text-green-600">Annual Income Recovery</div>
+                <div className="text-xs text-muted-foreground mt-1">optimization potential</div>
+              </CardContent>
+            </Card>
+            <Card className="border-blue-200 bg-blue-50">
+              <CardContent className="p-4 text-center">
+                <div className="text-2xl font-bold text-blue-700">&lt;2%</div>
+                <div className="text-sm text-blue-600">Member Retention Risk</div>
+                <div className="text-xs text-muted-foreground mt-1">with balanced approach</div>
+              </CardContent>
+            </Card>
+          </div>
+
+          <Card>
+            <CardHeader>
+              <CardTitle className="text-lg">Top 3 Findings</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="border-l-4 border-red-500 pl-4">
+                <div className="font-semibold text-foreground">HELOC Rate Corridor</div>
+                <div className="text-sm text-muted-foreground">23bp below optimal pricing vs. prime + margin</div>
+              </div>
+              <div className="border-l-4 border-orange-500 pl-4">
+                <div className="font-semibold text-foreground">Certificate Ladder Mismatch</div>
+                <div className="text-sm text-muted-foreground">$1.2M locked in below-market 12-month CDs</div>
+              </div>
+              <div className="border-l-4 border-yellow-500 pl-4">
+                <div className="font-semibold text-foreground">Auto Loan Yield Compression</div>
+                <div className="text-sm text-muted-foreground">Promotional rates 45bp below sustainable levels</div>
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader>
+              <CardTitle className="text-lg">Quick Wins</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="flex justify-between items-start p-3 bg-green-50 border border-green-200 rounded-lg">
+                <div>
+                  <div className="font-semibold text-green-800">Adjust HELOC pricing floor</div>
+                  <div className="text-sm text-green-600">Prime + 50bp minimum vs. current prime + 27bp</div>
+                </div>
+                <div className="text-lg font-bold text-green-700">$840K</div>
+              </div>
+              <div className="flex justify-between items-start p-3 bg-green-50 border border-green-200 rounded-lg">
+                <div>
+                  <div className="font-semibold text-green-800">Restructure promotional auto rates</div>
+                  <div className="text-sm text-green-600">New member rates aligned to risk-based pricing</div>
+                </div>
+                <div className="text-lg font-bold text-green-700">$620K</div>
+              </div>
+              <div className="flex justify-between items-start p-3 bg-green-50 border border-green-200 rounded-lg">
+                <div>
+                  <div className="font-semibold text-green-800">Optimize money market tiers</div>
+                  <div className="text-sm text-green-600">Reduce high-balance rate premiums by 25bp</div>
+                </div>
+                <div className="text-lg font-bold text-green-700">$390K</div>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+      )
+    }
+
+    if (activeDepth === "Agent Workflow") {
+      return (
+        <div className="space-y-6">
+          {agents.slice(1).map((agent, index) => (
+            <Card key={index}>
+              <CardHeader>
+                <CardTitle className="text-lg flex items-center gap-2">
+                  <div
+                    className={`w-3 h-3 rounded-full ${agent.status === "Complete" ? "bg-green-500" : "bg-gray-300"}`}
+                  />
+                  {agent.name} Results
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                {agent.name === "Asset Profitability Agent" && (
+                  <div className="space-y-3">
+                    <div className="bg-red-50 border border-red-200 rounded-lg p-3">
+                      <div className="font-semibold text-red-800">Yield Compression Detected</div>
+                      <div className="text-sm text-red-600">Auto loans: 4.2% vs. peer median 4.8%</div>
+                    </div>
+                    <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-3">
+                      <div className="font-semibold text-yellow-800">HELOC Underpricing</div>
+                      <div className="text-sm text-yellow-600">Current: Prime + 27bp | Optimal: Prime + 50bp</div>
+                    </div>
+                  </div>
+                )}
+                {agent.name === "Liability Cost Agent" && (
+                  <div className="space-y-3">
+                    <div className="bg-green-50 border border-green-200 rounded-lg p-3">
+                      <div className="font-semibold text-green-800">Money Market Optimization</div>
+                      <div className="text-sm text-green-600">High-balance tiers 25bp above competitive necessity</div>
+                    </div>
+                    <div className="bg-blue-50 border border-blue-200 rounded-lg p-3">
+                      <div className="font-semibold text-blue-800">Certificate Strategy</div>
+                      <div className="text-sm text-blue-600">$1.2M in below-market 12-month terms</div>
+                    </div>
+                  </div>
+                )}
+                {agent.name === "Rate Environment Agent" && (
+                  <div className="space-y-3">
+                    <div className="bg-purple-50 border border-purple-200 rounded-lg p-3">
+                      <div className="font-semibold text-purple-800">Fed Policy Impact</div>
+                      <div className="text-sm text-purple-600">Rising rate environment favors asset repricing</div>
+                    </div>
+                  </div>
+                )}
+                {agent.name === "Member Behavior Agent" && (
+                  <div className="space-y-3">
+                    <div className="bg-pink-50 border border-pink-200 rounded-lg p-3">
+                      <div className="font-semibold text-pink-800">Retention Modeling</div>
+                      <div className="text-sm text-pink-600">Rate increases &lt;50bp show minimal churn risk</div>
+                    </div>
+                  </div>
+                )}
+                {agent.name === "ALM Optimization Agent" && (
+                  <div className="space-y-3">
+                    <div className="bg-teal-50 border border-teal-200 rounded-lg p-3">
+                      <div className="font-semibold text-teal-800">Duration Analysis</div>
+                      <div className="text-sm text-teal-600">Asset-liability mismatch: +2.3 years average</div>
+                    </div>
+                  </div>
+                )}
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+      )
+    }
+
+    if (activeDepth === "Implementation") {
+      return (
+        <div className="space-y-6">
+          <Card>
+            <CardHeader>
+              <CardTitle className="text-lg">Export Templates</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-3">
+              <div className="flex items-center justify-between p-3 border border-border rounded-lg">
+                <div className="flex items-center gap-3">
+                  <FileText className="w-5 h-5 text-blue-500" />
+                  <div>
+                    <div className="font-medium">Rate Adjustment Worksheet</div>
+                    <div className="text-sm text-muted-foreground">HELOC and auto loan pricing updates</div>
+                  </div>
+                </div>
+                <Button variant="outline" size="sm">
+                  Download
+                </Button>
+              </div>
+              <div className="flex items-center justify-between p-3 border border-border rounded-lg">
+                <div className="flex items-center gap-3">
+                  <FileText className="w-5 h-5 text-green-500" />
+                  <div>
+                    <div className="font-medium">Member Communication Templates</div>
+                    <div className="text-sm text-muted-foreground">Rate change notification scripts</div>
+                  </div>
+                </div>
+                <Button variant="outline" size="sm">
+                  Download
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader>
+              <CardTitle className="text-lg">Implementation Timeline</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="border-l-4 border-green-500 pl-4">
+                <div className="font-semibold text-foreground">Week 1-2: HELOC Rate Adjustment</div>
+                <div className="text-sm text-muted-foreground">Update pricing floor to Prime + 50bp minimum</div>
+              </div>
+              <div className="border-l-4 border-blue-500 pl-4">
+                <div className="font-semibold text-foreground">Week 3-4: Auto Loan Repricing</div>
+                <div className="text-sm text-muted-foreground">Implement risk-based promotional rates</div>
+              </div>
+              <div className="border-l-4 border-purple-500 pl-4">
+                <div className="font-semibold text-foreground">Month 2: Money Market Optimization</div>
+                <div className="text-sm text-muted-foreground">Reduce high-balance tier premiums</div>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+      )
     }
   }
-
-  const currentStepData = steps.find((step) => step.id === currentStep)
-  const IconComponent = currentStepData?.icon || Database
 
   return (
     <div className="min-h-screen bg-background">
       {/* Header */}
       <header className="border-b border-border bg-card/50 backdrop-blur-sm">
-        <div className="max-w-6xl mx-auto px-4 py-4">
+        <div className="max-w-7xl mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
             <Button
               variant="ghost"
@@ -132,180 +445,140 @@ export default function MarginAnalysisDemo() {
               <ArrowLeft className="w-4 h-4" />
               Back to Lab
             </Button>
-            <div className="text-sm text-muted-foreground">
-              Step {currentStep} of {steps.length}
-            </div>
+            <h1 className="text-xl font-semibold text-foreground">Credit Union Margin Analysis</h1>
+            {!isAnalysisRunning && !showResults && (
+              <Button
+                onClick={startAnalysis}
+                className="bg-emerald-600 hover:bg-emerald-700 text-white px-6 py-2 text-sm font-medium"
+              >
+                <Play className="w-4 h-4 mr-2" />
+                Start Analysis
+              </Button>
+            )}
           </div>
         </div>
       </header>
 
       {/* Progress Bar */}
-      <div className="w-full bg-muted/30">
-        <div
-          className="h-1 bg-primary transition-all duration-500 ease-out"
-          style={{ width: `${(currentStep / steps.length) * 100}%` }}
-        />
-      </div>
+      {isAnalysisRunning && (
+        <div className="w-full bg-muted/30">
+          <div className="h-1 bg-primary transition-all duration-500 ease-out" style={{ width: `${progress}%` }} />
+        </div>
+      )}
 
       {/* Main Content */}
-      <div className="max-w-4xl mx-auto px-4 py-8">
-        {/* Step Header */}
-        <div className="text-center mb-8">
-          <div className="flex items-center justify-center gap-3 mb-4">
-            <div className="w-16 h-16 bg-primary rounded-lg flex items-center justify-center">
-              <IconComponent className="w-8 h-8 text-primary-foreground" />
-            </div>
-            <div className="text-left">
-              <h1 className="text-3xl font-bold text-foreground">{currentStepData?.title}</h1>
-              <p className="text-muted-foreground">{currentStepData?.description}</p>
-            </div>
-          </div>
-        </div>
-
-        {/* Step Content */}
-        <Card className="mb-8">
-          <CardContent className="p-8">
-            {currentStepData?.content.type === "data" && (
-              <div className="space-y-4">
-                <h3 className="text-lg font-semibold text-foreground mb-4">Sample Data Files Processed</h3>
-                <div className="bg-muted/50 rounded-lg p-4 font-mono text-sm overflow-x-auto">
-                  <pre className="whitespace-pre-wrap text-foreground">{currentStepData.content.data}</pre>
-                </div>
-                <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                  <CheckCircle className="w-4 h-4 text-green-500" />
-                  <span>Data successfully imported and validated</span>
-                </div>
-              </div>
-            )}
-
-            {currentStepData?.content.type === "analysis" && (
-              <div className="space-y-4">
-                <h3 className="text-lg font-semibold text-foreground mb-4">AI Analysis Results</h3>
-                <div className="grid gap-3">
-                  {currentStepData.content.insights?.map((insight, index) => (
-                    <div key={index} className="flex items-start gap-3 p-3 bg-muted/30 rounded-lg">
-                      <Brain className="w-5 h-5 text-primary mt-0.5 flex-shrink-0" />
-                      <span className="text-foreground">{insight}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
-
-            {currentStepData?.content.type === "opportunities" && (
-              <div className="space-y-4">
-                <h3 className="text-lg font-semibold text-foreground mb-4">Identified Opportunities</h3>
-                <div className="space-y-3">
-                  {currentStepData.content.flags?.map((flag, index) => (
-                    <div key={index} className="flex items-center justify-between p-4 border border-border rounded-lg">
-                      <div className="flex items-center gap-3">
-                        <span
-                          className={`px-2 py-1 rounded-full text-xs font-medium ${
-                            flag.priority === "High"
-                              ? "bg-red-100 text-red-700"
-                              : flag.priority === "Medium"
-                                ? "bg-yellow-100 text-yellow-700"
-                                : "bg-green-100 text-green-700"
-                          }`}
-                        >
-                          {flag.priority}
-                        </span>
-                        <span className="text-foreground font-medium">{flag.opportunity}</span>
-                      </div>
-                      <span className="text-primary font-semibold">{flag.impact}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
-
-            {currentStepData?.content.type === "modeling" && (
-              <div className="space-y-4">
-                <h3 className="text-lg font-semibold text-foreground mb-4">Impact Scenarios</h3>
-                <div className="grid gap-4">
-                  {currentStepData.content.scenarios?.map((scenario, index) => (
-                    <Card key={index} className="border-border">
-                      <CardHeader className="pb-3">
-                        <CardTitle className="text-base">{scenario.scenario}</CardTitle>
-                      </CardHeader>
-                      <CardContent className="pt-0">
-                        <div className="grid grid-cols-3 gap-4 text-sm">
-                          <div>
-                            <span className="text-muted-foreground">Net Income Impact</span>
-                            <div className="font-semibold text-green-600">{scenario.netIncome}</div>
-                          </div>
-                          <div>
-                            <span className="text-muted-foreground">Member Retention</span>
-                            <div className="font-semibold text-foreground">{scenario.memberRetention}</div>
-                          </div>
-                          <div>
-                            <span className="text-muted-foreground">Timeframe</span>
-                            <div className="font-semibold text-foreground">{scenario.timeframe}</div>
-                          </div>
-                        </div>
-                      </CardContent>
-                    </Card>
-                  ))}
-                </div>
-              </div>
-            )}
-
-            {currentStepData?.content.type === "recommendations" && (
-              <div className="space-y-4">
-                <h3 className="text-lg font-semibold text-foreground mb-4">Implementation Roadmap</h3>
-                <div className="space-y-4">
-                  {currentStepData.content.actions?.map((action, index) => (
-                    <div
-                      key={index}
-                      className="flex items-start gap-4 p-4 border-l-4 border-primary bg-primary/5 rounded-r-lg"
-                    >
+      <div className="max-w-7xl mx-auto px-4 py-6">
+        <div className="grid grid-cols-1 lg:grid-cols-5 gap-6">
+          {/* Left Panel - Agent Architecture */}
+          <div className="lg:col-span-2 space-y-6">
+            <Card>
+              <CardHeader>
+                <CardTitle className="text-lg">Agent Architecture</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-3">
+                {agents.map((agent, index) => (
+                  <div key={index} className={`p-3 rounded-lg border-2 ${agent.color} group relative`}>
+                    <div className="flex items-center justify-between">
                       <div className="flex-1">
-                        <div className="font-semibold text-primary text-sm mb-1">{action.phase}</div>
-                        <div className="text-foreground font-medium mb-1">{action.action}</div>
-                        <div className="text-muted-foreground text-sm">{action.impact}</div>
+                        <div className="font-semibold text-sm">{agent.name}</div>
+                        <div className="text-xs text-muted-foreground mt-1">{agent.description}</div>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <div
+                          className={`w-2 h-2 rounded-full ${
+                            agent.status === "Processing"
+                              ? "bg-yellow-500 animate-pulse"
+                              : agent.status === "Complete"
+                                ? "bg-green-500"
+                                : "bg-gray-300"
+                          }`}
+                        />
+                        <span className="text-xs font-medium">{agent.status}</span>
                       </div>
                     </div>
-                  ))}
-                </div>
-              </div>
-            )}
-          </CardContent>
-        </Card>
+                  </div>
+                ))}
+              </CardContent>
+            </Card>
 
-        {/* Navigation */}
-        <div className="flex items-center justify-between">
-          <Button
-            variant="outline"
-            onClick={handlePrevStep}
-            disabled={currentStep === 1}
-            className="flex items-center gap-2 bg-transparent"
-          >
-            <ArrowLeft className="w-4 h-4" />
-            Previous Step
-          </Button>
-
-          <div className="flex items-center gap-2">
-            {steps.map((step) => (
-              <div
-                key={step.id}
-                className={`w-3 h-3 rounded-full transition-colors ${
-                  step.id === currentStep ? "bg-primary" : step.id < currentStep ? "bg-primary/60" : "bg-muted"
-                }`}
-              />
-            ))}
+            <Card>
+              <CardHeader>
+                <CardTitle className="text-lg">Data Sources</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-3">
+                {dataSources.map((source, index) => (
+                  <div key={index} className="p-3 border border-border rounded-lg">
+                    <div className="flex items-start gap-3">
+                      <span className="text-lg">{source.icon}</span>
+                      <div className="flex-1 min-w-0">
+                        <div className="font-semibold text-sm">{source.name}</div>
+                        <div className="text-xs text-muted-foreground mb-1">{source.description}</div>
+                        <div className="text-xs font-mono text-blue-600">{source.filename}</div>
+                        <div className="text-xs text-muted-foreground">
+                          {source.size} • {source.records}
+                        </div>
+                      </div>
+                      <CheckCircle className="w-4 h-4 text-green-500 flex-shrink-0" />
+                    </div>
+                  </div>
+                ))}
+              </CardContent>
+            </Card>
           </div>
 
-          {currentStep < steps.length ? (
-            <Button onClick={handleNextStep} className="flex items-center gap-2">
-              Next Step
-              <ArrowRight className="w-4 h-4" />
-            </Button>
-          ) : (
-            <Button onClick={handleBackToLab} className="flex items-center gap-2">
-              Complete Demo
-              <CheckCircle className="w-4 h-4" />
-            </Button>
-          )}
+          {/* Right Panel - Content */}
+          <div className="lg:col-span-3 space-y-6">
+            {/* Processing Analysis */}
+            {isAnalysisRunning && (
+              <Card>
+                <CardHeader>
+                  <CardTitle className="text-lg flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                      Processing Analysis
+                      <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
+                    </div>
+                    <div className="text-sm font-normal text-muted-foreground">{Math.round(progress)}% Complete</div>
+                  </CardTitle>
+                  <div className="text-sm text-muted-foreground">{currentPhase}</div>
+                  <div className="w-full bg-muted/30 rounded-full h-2 mt-2">
+                    <div
+                      className="h-2 bg-green-500 rounded-full transition-all duration-500 ease-out"
+                      style={{ width: `${progress}%` }}
+                    />
+                  </div>
+                </CardHeader>
+                <CardContent>
+                  <div className="bg-gray-900 rounded-lg p-4 h-64 overflow-y-auto font-mono text-sm">
+                    {processingLogs.map((log, index) => (
+                      <div key={index} className="text-green-400 mb-1">
+                        {log}
+                      </div>
+                    ))}
+                  </div>
+                </CardContent>
+              </Card>
+            )}
+
+            {/* Depth Toggle */}
+            <div className="flex gap-2 p-1 bg-muted rounded-lg">
+              {depthOptions.map((option) => (
+                <button
+                  key={option}
+                  onClick={() => setActiveDepth(option)}
+                  className={`flex-1 px-4 py-2 rounded-md text-sm font-medium transition-colors ${
+                    activeDepth === option
+                      ? "bg-background text-foreground shadow-sm"
+                      : "text-muted-foreground hover:text-foreground"
+                  }`}
+                >
+                  {option}
+                </button>
+              ))}
+            </div>
+
+            {/* Dynamic Content */}
+            <div className="min-h-96">{getDepthContent()}</div>
+          </div>
         </div>
       </div>
     </div>
